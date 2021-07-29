@@ -1,6 +1,6 @@
 <template>
   <q-page class="regex column items-center">
-    <q-card class="regex__card text-white q-mt-lg ">
+    <q-card class="regex__card text-white" :class="isMobile">
       <q-card-section>
         <h1>RegEx</h1>
         <h4>O que é uma expressão regular?</h4>
@@ -14,13 +14,13 @@
         </ul>
       </q-card-section>
     </q-card>
-    <q-tabs v-model="tab" class="text-teal regex__section">
+    <q-tabs v-model="tab" dense class="text-orange-4 regex__section " :class="isMobile">
         <q-tab name="regex" icon="favorite" label="Primeiros Passos" />
         <q-tab name="javascript" icon="code" label="Usando no JavaScript" />
     </q-tabs>
-    <q-tab-panels v-model="tab" class="regex__panels  shadow-3">
+    <q-tab-panels v-model="tab" class="regex__panels shadow-3" :class="isMobile">
       <q-tab-panel name="regex">
-        <section class="column text-white ">
+        <section class="column text-white">
           <div>
             <h5>Criando nossas primeiras RegEx</h5>
             <p>Usando javascript podemos optar por duas formas de se criar uma regex.</p>
@@ -53,7 +53,7 @@
               const regex = /dog/g
             </div>
             <div class="row no-wrap q-gutter-x-sm">
-              <q-input v-model="patternFlag" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-10" />
+              <q-input v-model="patternFlag" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-9 col-sm-10" />
               <q-input v-model="flag" type="text" outlined dense label="Flag" bg-color="white" class="q-mb-sm" />
             </div>
             <q-input v-model="textFlag" :type="inputTypeMode(this.flag)" outlined dense :label="'Pattern: /' + patternFlag + '/' + flag"
@@ -80,7 +80,7 @@
             </div>
             <p>Exemplo prático:</p>
             <div class="row no-wrap q-gutter-x-sm">
-              <q-input v-model="patternInterval" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-10" />
+              <q-input v-model="patternInterval" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-9 col-sm-10" />
               <q-input v-model="flagInterval" type="text" outlined dense label="Flag" bg-color="white" class="q-mb-sm" />
             </div>
             <q-input v-model="textInterval" :type="inputTypeMode(this.flagInterval)" outlined dense :label="'Pattern: /' + patternInterval + '/' + flagInterval"
@@ -97,7 +97,7 @@
             <p>Se desejar pegar a forma literal do caractere basta usar o <strong>escape</strong> "\"</p>
             <p>Exemplo prático:</p>
             <div class="row no-wrap q-gutter-x-sm">
-              <q-input v-model="patternMeta" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-10" />
+              <q-input v-model="patternMeta" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-9 col-sm-10" />
               <q-input v-model="flagMeta" type="text" outlined dense label="Flag" bg-color="white" class="q-mb-sm" />
             </div>
             <q-input v-model="textMeta" :type="inputTypeMode(this.flagMeta)" outlined dense :label="'Pattern: /' + patternMeta + '/' + flagMeta" :bg-color="regTestMeta" color="white"/>
@@ -128,7 +128,7 @@
             </div>
             <p>Exemplo prático:</p>
             <div class="row no-wrap q-gutter-x-sm">
-              <q-input v-model="patternQuant" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-10" />
+              <q-input v-model="patternQuant" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-9 col-sm-10" />
               <q-input v-model="flagQuant" type="text" outlined dense label="Flag" bg-color="white" class="q-mb-sm" />
             </div>
             <q-input v-model="textQuant" :type="inputTypeMode(this.flagQuant)" outlined dense :label="'Pattern: /' + patternQuant + '/' + flagQuant" :bg-color="regTestQuant" color="white"/>
@@ -138,7 +138,8 @@
           <div>
             <h5>Âncoras</h5>
             <p>Muitas vezes vamos precisar delimitar a ação da nossa regex. Desse modo podemos usar três metas para nos auxiliar nessa função.</p>
-            <p>Quando queremos tratar uma palavra que em suas extremidades não possua outra letra ou palavra, usamos a shorthands \b (Corresponde a um limite de palavras, isto é, a posição entre uma palavra e um espaço.).</p>
+            <p>Quando queremos tratar uma palavra que em suas extremidades não possua outra letra ou palavra, usamos a shorthands \b (Corresponde a um limite de palavras, isto é,
+               a posição entre uma palavra e um espaço.).</p>
             <div class="bg-grey-3 q-pa-sm q-mb-md text-black">
               const regex = /\bpar\b/gi
             </div>
@@ -147,7 +148,7 @@
             </div>
             <p>Exemplo prático:</p>
             <div class="row no-wrap q-gutter-x-sm">
-              <q-input v-model="patternAncora" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-10" />
+              <q-input v-model="patternAncora" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-9 col-sm-10" />
               <q-input v-model="flagAncora" type="text" outlined dense label="Flag" bg-color="white" class="q-mb-sm" />
             </div>
             <q-input v-model="textAncora" :type="inputTypeMode(this.flagAncora)" outlined dense :label="'Pattern: /' + patternAncora + '/' + flagAncora" :bg-color="regTestAncora" color="white"/>
@@ -155,7 +156,8 @@
             <div class="text-italic text-grey-5 q-my-sm" style="box-shadow: -3px 0px 0px #e76f51">
               Vale notar que caracteres com acentos ou - são considerados bordas.
             </div>
-            <p>Podemos lidar com o início e fim de uma linha. Usamos a meta ^ para indicar o início de uma linha e $ indicando o fim de uma linha. Algo importante a se notar é que para as âncoras funcionarem a cada quebra de linha \n a flag m tem que estar habilitada.</p>
+            <p>Podemos lidar com o início e fim de uma linha. Usamos a meta ^ para indicar o início de uma linha e $ indicando o fim de uma linha. Algo importante a se notar
+              é que para as âncoras funcionarem a cada quebra de linha \n a flag m tem que estar habilitada.</p>
             <div class="bg-grey-3 q-pa-sm q-mb-md text-black">
               const regex =  /^[a-z]*\b/gmi
             </div>
@@ -169,7 +171,7 @@
             </div>
             <p>Exemplo prático:</p>
             <div class="row no-wrap q-gutter-x-sm">
-            <q-input v-model="patternAncoraLine" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-10" />
+            <q-input v-model="patternAncoraLine" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-9 col-sm-10" />
               <q-input v-model="flagAncoraLine" type="text" outlined dense label="Flag" bg-color="white" class="q-mb-sm" />
             </div>
             <q-input v-model="textAncoraLine" :type="inputTypeMode(this.flagAncoraLine)" outlined dense :label="'Pattern: /' + patternAncoraLine + '/' + flagAncoraLine" :bg-color="regTestAncoraLine" color="white"/>
@@ -199,7 +201,7 @@
             </div>
             <p>Exemplo prático:</p>
             <div class="row no-wrap q-gutter-x-sm">
-              <q-input v-model="patternGroup" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-10" />
+              <q-input v-model="patternGroup" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-9 col-sm-10" />
               <q-input v-model="flagGroup" type="text" outlined dense label="Flag" bg-color="white" class="q-mb-sm" />
             </div>
             <q-input v-model="textGroup" :type="inputTypeMode(this.flagGroup)" outlined dense :label="'Pattern: /' + patternGroup + '/' + flagGroup" :bg-color="regTestGroup" color="white"/>
@@ -208,7 +210,7 @@
         </section>
       </q-tab-panel>
       <q-tab-panel name="javascript">
-        <section class=" column text-white ">
+        <section class=" column text-white">
           <h5>Métodos de regex no js</h5>
           <p>O objeto regex possui dois métodos: exec e test. Já com string possui 4 métodos: match, replace, search e split. Porém neste post vou me ater somente a 3 métodos: test, match e replace.</p>
           <div>
@@ -277,6 +279,10 @@ export default ({
   },
 
   computed: {
+    isMobile () {
+      return this.$q.screen.lt.md ? 'fit' : ''
+    },
+
     match () {
       const regex = new RegExp(this.patternFlag, this.flag)
       return regex
@@ -380,20 +386,20 @@ export default ({
 
   &__card {
     background-color: #e9c46a;
-    width: 80%;
+    width: 70%;
     z-index: 1;
   }
 
   &__section {
     background-color: #264653;
-    padding: 20px;
-    width: 80%;
+    // padding: 20px;
+    width: 70%;
   }
 
   &__panels {
     background-color: #264653;
-    padding: 20px;
-    width: 80%;
+    // padding: 20px;
+    width: 70%;
     box-shadow: 0 -1px 3px rgba($color: #000000, $alpha: 0.5);
   }
 }
