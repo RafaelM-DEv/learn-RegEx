@@ -54,9 +54,9 @@
             </div>
             <div class="row no-wrap q-gutter-x-sm">
               <q-input v-model="patternFlag" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-9 col-sm-10" />
-              <q-input v-model="flag" type="text" outlined dense label="Flag" bg-color="white" class="q-mb-sm" />
+              <q-select v-model="flag" :options="flagsOptions" multiple map-options emit-value outlined dense label="Flag" bg-color="white" class="q-mb-sm fit" />
             </div>
-            <q-input v-model="textFlag" :type="inputTypeMode(this.flag)" outlined dense :label="'Pattern: /' + patternFlag + '/' + flag"
+            <q-input v-model="textFlag" :type="inputTypeMode(this.flag)" outlined dense :label="'Pattern: /' + patternFlag + '/' + flag.join('')"
                      :bg-color="regTestFlag" color="white"/>
             <div class="q-mt-sm">match: {{ textFlag.match(match) }}</div>
           </div>
@@ -72,7 +72,7 @@
 
           <div>
             <h5>Conjuntos " [ ] "</h5>
-            <p>Com os conjuntos dizemos a regex que uma determinada casa pode ter diversos valores</p>
+            <p>Com os conjuntos dizemos a regex que uma determinada casa pode ter diversos valores.</p>
             <p>Uma funcionalidade interessante é de adicionar range (invervalos) dentro dos nossos conjuntos.</p>
             <p>Podemos determinar um conjunto de match em letras que vão de A à Z ou pegue qualquer digito (0 à 9).</p>
             <div class="bg-grey-3 q-pa-sm q-mb-md text-black">
@@ -81,9 +81,9 @@
             <p>Exemplo prático:</p>
             <div class="row no-wrap q-gutter-x-sm">
               <q-input v-model="patternInterval" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-9 col-sm-10" />
-              <q-input v-model="flagInterval" type="text" outlined dense label="Flag" bg-color="white" class="q-mb-sm" />
+              <q-select v-model="flagInterval" :options="flagsOptions" multiple map-options emit-value outlined dense label="Flag" bg-color="white" class="q-mb-sm fit" />
             </div>
-            <q-input v-model="textInterval" :type="inputTypeMode(this.flagInterval)" outlined dense :label="'Pattern: /' + patternInterval + '/' + flagInterval"
+            <q-input v-model="textInterval" :type="inputTypeMode(this.flagInterval)" outlined dense :label="'Pattern: /' + patternInterval + '/' + flagInterval.join('')"
                      :bg-color="regTestInterval" color="white"/>
             <div class="q-mt-sm">match {{ textInterval.match(matchInterval)}}</div>
           </div>
@@ -95,12 +95,15 @@
               const regex = /cas./gi
             </div>
             <p>Se desejar pegar a forma literal do caractere basta usar o <strong>escape</strong> "\"</p>
+            <div class="bg-grey-3 q-pa-sm q-mb-md text-black">
+              const regex = /[a\-o]/gi
+            </div>
             <p>Exemplo prático:</p>
             <div class="row no-wrap q-gutter-x-sm">
               <q-input v-model="patternMeta" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-9 col-sm-10" />
-              <q-input v-model="flagMeta" type="text" outlined dense label="Flag" bg-color="white" class="q-mb-sm" />
+              <q-select v-model="flagMeta" :options="flagsOptions" multiple map-options emit-value outlined dense label="Flag" bg-color="white" class="q-mb-sm fit" />
             </div>
-            <q-input v-model="textMeta" :type="inputTypeMode(this.flagMeta)" outlined dense :label="'Pattern: /' + patternMeta + '/' + flagMeta" :bg-color="regTestMeta" color="white"/>
+            <q-input v-model="textMeta" :type="inputTypeMode(this.flagMeta)" outlined dense :label="'Pattern: /' + patternMeta + '/' + flagMeta.join('')" :bg-color="regTestMeta" color="white"/>
             <div class="q-mt-sm">match: {{ textMeta.match(matchMeta)}}</div>
           </div>
 
@@ -129,9 +132,9 @@
             <p>Exemplo prático:</p>
             <div class="row no-wrap q-gutter-x-sm">
               <q-input v-model="patternQuant" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-9 col-sm-10" />
-              <q-input v-model="flagQuant" type="text" outlined dense label="Flag" bg-color="white" class="q-mb-sm" />
+              <q-select v-model="flagQuant" :options="flagsOptions" multiple map-options emit-value outlined dense label="Flag" bg-color="white" class="q-mb-sm fit" />
             </div>
-            <q-input v-model="textQuant" :type="inputTypeMode(this.flagQuant)" outlined dense :label="'Pattern: /' + patternQuant + '/' + flagQuant" :bg-color="regTestQuant" color="white"/>
+            <q-input v-model="textQuant" :type="inputTypeMode(this.flagQuant)" outlined dense :label="'Pattern: /' + patternQuant + '/' + flagQuant.join('')" :bg-color="regTestQuant" color="white"/>
             <div class="q-mt-sm">match: {{ textQuant.match(matchQuant)}}</div>
           </div>
 
@@ -149,9 +152,9 @@
             <p>Exemplo prático:</p>
             <div class="row no-wrap q-gutter-x-sm">
               <q-input v-model="patternAncora" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-9 col-sm-10" />
-              <q-input v-model="flagAncora" type="text" outlined dense label="Flag" bg-color="white" class="q-mb-sm" />
+              <q-select v-model="flagAncora" :options="flagsOptions" multiple map-options emit-value outlined dense label="Flag" bg-color="white" class="q-mb-sm fit" />
             </div>
-            <q-input v-model="textAncora" :type="inputTypeMode(this.flagAncora)" outlined dense :label="'Pattern: /' + patternAncora + '/' + flagAncora" :bg-color="regTestAncora" color="white"/>
+            <q-input v-model="textAncora" :type="inputTypeMode(this.flagAncora)" outlined dense :label="'Pattern: /' + patternAncora + '/' + flagAncora.join('')" :bg-color="regTestAncora" color="white"/>
             <div class="q-mt-sm">match: {{ textAncora.match(matchAncora)}}</div>
             <div class="text-italic text-grey-5 q-my-sm" style="box-shadow: -3px 0px 0px #e76f51">
               Vale notar que caracteres com acentos ou - são considerados bordas.
@@ -172,9 +175,9 @@
             <p>Exemplo prático:</p>
             <div class="row no-wrap q-gutter-x-sm">
             <q-input v-model="patternAncoraLine" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-9 col-sm-10" />
-              <q-input v-model="flagAncoraLine" type="text" outlined dense label="Flag" bg-color="white" class="q-mb-sm" />
+            <q-select v-model="flagAncoraLine" :options="flagsOptions" multiple map-options emit-value outlined dense label="Flag" bg-color="white" class="q-mb-sm fit" />
             </div>
-            <q-input v-model="textAncoraLine" :type="inputTypeMode(this.flagAncoraLine)" outlined dense :label="'Pattern: /' + patternAncoraLine + '/' + flagAncoraLine" :bg-color="regTestAncoraLine" color="white"/>
+            <q-input v-model="textAncoraLine" :type="inputTypeMode(this.flagAncoraLine)" outlined dense :label="'Pattern: /' + patternAncoraLine + '/' + flagAncoraLine.join('')" :bg-color="regTestAncoraLine" color="white"/>
             <div class="q-mt-sm">match: {{ textAncoraLine.match(matchAncoraLine) }}</div>
           </div>
 
@@ -202,9 +205,9 @@
             <p>Exemplo prático:</p>
             <div class="row no-wrap q-gutter-x-sm">
               <q-input v-model="patternGroup" type="text" outlined dense label="Pattern" bg-color="white" class="q-mb-sm col-9 col-sm-10" />
-              <q-input v-model="flagGroup" type="text" outlined dense label="Flag" bg-color="white" class="q-mb-sm" />
+              <q-select v-model="flagGroup" :options="flagsOptions" multiple map-options emit-value outlined dense label="Flag" bg-color="white" class="q-mb-sm fit" />
             </div>
-            <q-input v-model="textGroup" :type="inputTypeMode(this.flagGroup)" outlined dense :label="'Pattern: /' + patternGroup + '/' + flagGroup" :bg-color="regTestGroup" color="white"/>
+            <q-input v-model="textGroup" :type="inputTypeMode(this.flagGroup)" outlined dense :label="'Pattern: /' + patternGroup + '/' + flagGroup.join('')" :bg-color="regTestGroup" color="white"/>
             <div class="q-mt-sm">match: {{ textGroup.match(matchGroup) }}</div>
           </div>
         </section>
@@ -243,31 +246,31 @@ export default ({
   data () {
     return {
       patternFlag: '',
-      flag: '',
+      flag: [],
       textFlag: '',
 
       patternInterval: '',
-      flagInterval: '',
+      flagInterval: [],
       textInterval: '',
 
       patternMeta: '',
-      flagMeta: '',
+      flagMeta: [],
       textMeta: '',
 
       patternQuant: '',
-      flagQuant: '',
+      flagQuant: [],
       textQuant: '',
 
       patternAncora: '',
-      flagAncora: '',
+      flagAncora: [],
       textAncora: '',
 
       patternAncoraLine: '',
-      flagAncoraLine: '',
+      flagAncoraLine: [],
       textAncoraLine: '',
 
       patternGroup: '',
-      flagGroup: '',
+      flagGroup: [],
       textGroup: '',
 
       regra: '',
@@ -279,42 +282,50 @@ export default ({
   },
 
   computed: {
+    flagsOptions () {
+      const flag = [
+        { label: 'g', value: 'g' },
+        { label: 'i', value: 'i' },
+        { label: 'm', value: 'm' }
+      ]
+      return flag
+    },
     isMobile () {
       return this.$q.screen.lt.md ? 'fit' : ''
     },
 
     match () {
-      const regex = new RegExp(this.patternFlag, this.flag)
+      const regex = new RegExp(this.patternFlag, this.flag.join(''))
       return regex
     },
 
     matchGroup () {
-      const regex = new RegExp(this.patternGroup, this.flagGroup)
+      const regex = new RegExp(this.patternGroup, this.flagGroup.join(''))
       return regex
     },
 
     matchInterval () {
-      const regex = new RegExp(this.patternInterval, this.flagInterval)
+      const regex = new RegExp(this.patternInterval, this.flagInterval.join(''))
       return regex
     },
 
     matchMeta () {
-      const regex = new RegExp(this.patternMeta, this.flagMeta)
+      const regex = new RegExp(this.patternMeta, this.flagMeta.join(''))
       return regex
     },
 
     matchQuant () {
-      const regex = new RegExp(this.patternQuant, this.flagQuant)
+      const regex = new RegExp(this.patternQuant, this.flagQuant.join(''))
       return regex
     },
 
     matchAncora () {
-      const regex = new RegExp(this.patternAncora, this.flagAncora)
+      const regex = new RegExp(this.patternAncora, this.flagAncora.join(''))
       return regex
     },
 
     matchAncoraLine () {
-      const regex = new RegExp(this.patternAncoraLine, this.flagAncoraLine)
+      const regex = new RegExp(this.patternAncoraLine, this.flagAncoraLine.join(''))
       return regex
     },
 
@@ -323,7 +334,7 @@ export default ({
     },
 
     regTestFlag () {
-      const regex = new RegExp(this.patternFlag, this.flag)
+      const regex = new RegExp(this.patternFlag, this.flag.join(''))
       return regex.test(this.textFlag) ? 'green' : 'red-5'
     },
 
@@ -332,12 +343,12 @@ export default ({
     },
 
     regTestInterval () {
-      const regex = new RegExp(this.patternInterval, this.flagInterval)
+      const regex = new RegExp(this.patternInterval, this.flagInterval.join(''))
       return regex.test(this.textInterval) ? 'green' : 'red-5'
     },
 
     regTestMeta () {
-      const regex = new RegExp(this.patternMeta, this.flagMeta)
+      const regex = new RegExp(this.patternMeta, this.flagMeta.join(''))
       return regex.test(this.textMeta) ? 'green' : 'red-5'
     },
 
@@ -346,29 +357,29 @@ export default ({
     },
 
     regTestQuant () {
-      const regex = new RegExp(this.patternQuant, this.flagQuant)
+      const regex = new RegExp(this.patternQuant, this.flagQuant.join(''))
       return regex.test(this.textQuant) ? 'green' : 'red-5'
     },
 
     regTestAncora () {
-      const regex = new RegExp(this.patternAncora, this.flagAncora)
+      const regex = new RegExp(this.patternAncora, this.flagAncora.join(''))
       return regex.test(this.textAncora) ? 'green' : 'red-5'
     },
 
     regTestAncoraLine () {
-      const regex = new RegExp(this.patternAncoraLine, this.flagAncoraLine)
+      const regex = new RegExp(this.patternAncoraLine, this.flagAncoraLine.join(''))
       return regex.test(this.textAncoraLine) ? 'green' : 'red-5'
     },
 
     regTestGroup () {
-      const regex = new RegExp(this.patternGroup, this.flagGroup)
+      const regex = new RegExp(this.patternGroup, this.flagGroup.join(''))
       return regex.test(this.textGroup) ? 'green' : 'red-5'
     }
   },
 
   methods: {
     inputTypeMode (model) {
-      const regex = /m/g
+      const regex = /m/
       return regex.test(model) ? 'textarea' : 'text'
     },
 
@@ -383,23 +394,24 @@ export default ({
 .regex {
   font-family: Poppins;
   background-image: linear-gradient(to top, #264653, #e76f51);
+  $width: 50%;
 
   &__card {
     background-color: #e9c46a;
-    width: 70%;
+    width: $width;
     z-index: 1;
   }
 
   &__section {
     background-color: #264653;
     // padding: 20px;
-    width: 70%;
+    width: $width;
   }
 
   &__panels {
     background-color: #264653;
     // padding: 20px;
-    width: 70%;
+    width: $width;
     box-shadow: 0 -1px 3px rgba($color: #000000, $alpha: 0.5);
   }
 }
