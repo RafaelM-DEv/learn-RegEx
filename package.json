@@ -12,6 +12,7 @@
     "deploy": "push-dir --dir=dist/pwa --branch=gh-pages --cleanup"
   },
   "dependencies": {
+    "@docsearch/js": "^3.0.0",
     "@quasar/extras": "^1.0.0",
     "core-js": "^3.6.5",
     "push-dir": "^0.4.1",
