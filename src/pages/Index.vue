@@ -12,6 +12,9 @@
           <li>validação de formatos</li>
           <li>filtragem de informações</li>
         </ul>
+        <div>
+          <div id="docsearch"></div>
+        </div>
       </q-card-section>
     </q-card>
     <q-tabs v-model="tab" dense class="text-orange-4 regex__section " :class="isMobile">
@@ -242,7 +245,12 @@
 </template>
 
 <script>
+import docsearch from '@docsearch/js'
+
+import '@docsearch/css'
+
 export default ({
+
   data () {
     return {
       patternFlag: '',
@@ -375,6 +383,20 @@ export default ({
       const regex = new RegExp(this.patternGroup, this.flagGroup.join(''))
       return regex.test(this.textGroup) ? 'green' : 'red-5'
     }
+  },
+
+  mounted () {
+    const doc = document.getElementById('docsearch')
+
+    docsearch({
+      container: doc,
+      appId: 'R2IYF7ETH7',
+      apiKey: '599cec31baffa4868cae4e79f180729b',
+      indexName: 'docsearch',
+      searchParameters: {
+        facetFilters: ['language:pt', 'version:1.0.0']
+      }
+    })
   },
 
   methods: {
